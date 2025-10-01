@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f9;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+.grid-item {
+    background: #14d981;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 100px;
+    width: 200px;
+}
