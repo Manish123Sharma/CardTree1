@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import GridLayout from "react-grid-layout";
+import { Responsive, WidthProvider } from "react-grid-layout";
 import "../styles/styles.css";
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
 const SyncedGrid = () => {
-    const numItems = 5; // dynamically increase items
-    const cols = 12; // number of columns
+    const numItems = 5;
+    const cols = 12;
     const items = Array.from({ length: numItems }, (_, i) => i.toString());
 
     const [layouts, setLayouts] = useState({ lg: [], sm: [] });
-    const [shuffleId, setShuffleId] = useState(0); // to force re-render
+    const [shuffleId, setShuffleId] = useState(0);
 
-    // Helper: check if a new item overlaps existing items
+    // Helper: check overlap
     const hasOverlap = (newItem, positions) => {
         return positions.some(
             (item) =>
@@ -26,21 +28,19 @@ const SyncedGrid = () => {
         const positions = [];
 
         items.forEach((i) => {
-            let w = Math.floor(Math.random() * 10) + 1; // 1–3 width
-            let h = Math.floor(Math.random() * 15) + 1; // 1–3 height
-            let x, y, attempts = 0;
-
+            let w, h, x, y, attempts = 0;
             do {
-                x = Math.floor(Math.random() * (cols - w + 1));
-                y = Math.floor(Math.random() * (positions.length + 5)); // dynamic row space
+                w = Math.floor(Math.random() * 2) + 1; // width 1-2
+                h = Math.floor(Math.random() * 2) + 1; // height 1-2
+                x = Math.floor(Math.random() * (cols - w));
+                y = Math.floor(Math.random() * (positions.length + 5));
                 attempts++;
-                if (attempts > 100) break; // safety fallback
+                if (attempts > 100) break;
             } while (hasOverlap({ x, y, w, h }, positions));
 
             positions.push({ i, x, y, w, h });
         });
 
-        // Print positions
         console.log("=== Grid Positions ===");
         positions.forEach((pos) =>
             console.log(`Grid ${pos.i}: x=${pos.x}, y=${pos.y}, w=${pos.w}, h=${pos.h}`)
@@ -53,10 +53,10 @@ const SyncedGrid = () => {
         const lgLayout = generateMosaicLayout();
         const smLayout = lgLayout.map((item, index) => ({
             ...item,
-            x: 30,
+            x: 0,
             y: index,
-            w: 50,
-            h: 10,
+            w: 1,
+            h: 1,
         }));
 
         setLayouts({ lg: lgLayout, sm: smLayout });
@@ -65,11 +65,10 @@ const SyncedGrid = () => {
 
     useEffect(() => {
         initializeLayouts();
-        // eslint-disable-next-line
     }, []);
 
-    const handleLayoutChange = (layout, allLayouts) => {
-        setLayouts({ ...allLayouts });
+    const handleLayoutChange = (_, allLayouts) => {
+        setLayouts(allLayouts);
     };
 
     return (
@@ -81,7 +80,7 @@ const SyncedGrid = () => {
                 Shuffle Pattern
             </button>
 
-            <GridLayout
+            <ResponsiveGridLayout
                 key={shuffleId}
                 className="layout"
                 layouts={layouts}
@@ -91,14 +90,14 @@ const SyncedGrid = () => {
                 onLayoutChange={handleLayoutChange}
                 isResizable={true}
                 isDraggable={true}
-                compactType={null} // prevent auto compaction
+                compactType={null}
             >
                 {items.map((i) => (
                     <div key={i} className="grid-item">
                         <span>Item {i}</span>
                     </div>
                 ))}
-            </GridLayout>
+            </ResponsiveGridLayout>
         </div>
     );
 };
