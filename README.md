@@ -29,19 +29,54 @@ The frontend is built with **Next.js + React Grid Layout**, while the backend is
 ## 📂 Project Structure
 
     CardTree1/
-    │── client/ # Frontend (Next.js app)
-    │ ├── src/
-    │ │ ├── app/ # Next.js pages & components
-    │ │ └── styles/ # CSS styles
-    │
-    │── server/ # Backend (Node.js + Express)
-    │ ├── app.js # Main server entry point
-    │ ├── routes/ # API routes
-    │ ├── models/ # Mongoose schemas
-    │ └── config/ # DB config
-    │
-    ├── package.json
+    ├── .gitignore
     ├── README.md
+    ├── client
+        ├── .gitignore
+        ├── README.md
+        ├── eslint.config.js
+        ├── index.html
+        ├── package-lock.json
+        ├── package.json
+        ├── public
+        │   └── vite.svg
+        ├── src
+        │   ├── App.css
+        │   ├── App.jsx
+        │   ├── api
+        │   │   └── api.js
+        │   ├── assets
+        │   │   └── react.svg
+        │   ├── components
+        │   │   └── SyncedGrid.jsx
+        │   ├── hooks
+        │   │   └── useLayouts.js
+        │   ├── index.css
+        │   ├── main.jsx
+        │   ├── pages
+        │   │   └── Home.jsx
+        │   ├── styles
+        │   │   └── styles.css
+        │   └── utils
+        │   │   └── formatData.js
+        └── vite.config.js
+    ├── package-lock.json
+    ├── package.json
+    └── server
+        ├── .gitignore
+        ├── app.js
+        ├── config
+            └── db.js
+        ├── controllers
+            └── layoutController.js
+        ├── middleware
+            └── errorHandler.js
+        ├── models
+            └── Layout.js
+        ├── package-lock.json
+        ├── package.json
+        └── routes
+            └── layoutRoutes.js
 
 ---
 
